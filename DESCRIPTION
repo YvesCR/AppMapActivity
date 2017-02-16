@@ -1,0 +1,14 @@
+Package: AppMapActivity
+Type: Package
+Title: Light package to generate activity map for my blog
+Version: 0.1.0
+Author: Yves Crutain
+Maintainer: Yves Crutain <yves.crutain@gmail.com>
+Description: Light package to generate activity map for my blog
+Depends:
+    R (>= 3.1.0),
+    ggplot2 (>= 2.2.0),
+    tidyverse
+License: Apache2
+Encoding: UTF-8
+LazyData: true
