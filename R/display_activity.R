@@ -5,21 +5,13 @@
 #' @importFrom tidyverse
 #'
 display_activity <- function(activity_to_display){
-  # activity_to_display <- "Activités d'enquête"
+  # activity_to_display <- 1
+  activity_label <- lookup %>% filter(id == activity_to_display) %>% select(apen700_label)
 
   # for that activity, the df of the count:
   dpt_select_activity <- AppMapActivity::dpt_count_act %>%
-    filter(apen700_label == activity_to_display) %>%
-    mutate(code_dept = dpt) %>%
-    mutate(code_dept = ifelse(code_dept == "20", "2A", code_dept)
-           , count = ifelse(code_dept == "20", count / 2, count))
-
-  # we deal with the Corsica issue by dividing the department numbers in 2:
-  dpt_select_activity_2a <- dpt_select_activity %>%
-    filter(code_dept == "2A") %>%
-    mutate(code_dept = "2B")
-
-  dpt_select_activity <- rbind(dpt_select_activity, dpt_select_activity_2a)
+    filter(apen700_label == activity_label$apen700_label) %>%
+    mutate(code_dept = dpt)
 
   dpt_p_det_act <- AppMapActivity::dpt_p_det %>%
     left_join(dpt_select_activity, by = "code_dept")
@@ -36,24 +28,19 @@ display_activity <- function(activity_to_display){
   dpt_p_det_act_idf <- dpt_p_det_act %>%
     filter(code_dept %in% idf_lim_dpt) %>%
     mutate(long = factor_growth * (long - 6) + (2.348858 - 6) * (1 - factor_growth)
-           , lat = factor_growth * (lat - 6) + (48.853226 - 6) * (1 - factor_growth))
+      , lat = factor_growth * (lat - 6) + (48.853226 - 6) * (1 - factor_growth))
 
   # center of Paris:(manual)
   # center_paris <- c(48.853226, 2.348858)
 
   dpt_p_det_act_sorted <- rbind(dpt_p_det_act_no_idf, NA, dpt_p_det_act_idf)
-  rm(dpt_p_det_act_no_idf)
-  rm(dpt_p_det_act_idf)
-  rm(dpt_p_det_act)
-  rm(dpt_select_activity)
-  rm(dpt_select_activity_2a)
 
-  map <- ggplot2::ggplot() +
+  ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
                           , ggplot2::aes(x = long, y = lat, group = group, fill = count)
                           , size=.2, color = 'grey40') +
     ggplot2::scale_fill_gradientn(colours = colorRamps::matlab.like(10)) +
-    ggplot2::ggtitle(paste0(activity_to_display)) +
+    ggplot2::ggtitle(paste0(activity_label$apen700_label)) +
     ggplot2::theme(axis.text = ggplot2::element_blank()
                    , axis.title = ggplot2::element_blank()
                    , panel.background = ggplot2::element_blank()
@@ -66,7 +53,4 @@ display_activity <- function(activity_to_display){
                    , complete = TRUE) +
     ggplot2::coord_map()
 
-  rm(dpt_p_det_act_sorted)
-
-  return(map)
 }
