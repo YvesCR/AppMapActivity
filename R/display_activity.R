@@ -42,6 +42,11 @@ display_activity <- function(activity_to_display){
   # center_paris <- c(48.853226, 2.348858)
 
   dpt_p_det_act_sorted <- rbind(dpt_p_det_act_no_idf, NA, dpt_p_det_act_idf)
+  rm(dpt_p_det_act_no_idf)
+  rm(dpt_p_det_act_idf)
+  rm(dpt_p_det_act)
+  rm(dpt_select_activity)
+  rm(dpt_select_activity_2a)
 
   ggplot() +
     geom_polygon(data = dpt_p_det_act_sorted
