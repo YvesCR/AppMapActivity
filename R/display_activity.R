@@ -48,7 +48,7 @@ display_activity <- function(activity_to_display){
   rm(dpt_select_activity)
   rm(dpt_select_activity_2a)
 
-  ggplot2::ggplot() +
+  map <- ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
                           , ggplot2::aes(x = long, y = lat, group = group, fill = count)
                           , size=.2, color = 'grey40') +
@@ -65,4 +65,8 @@ display_activity <- function(activity_to_display){
                    , plot.title = ggplot2::element_text(hjust = 0.5)
                    , complete = TRUE) +
     ggplot2::coord_map()
+
+  rm(dpt_p_det_act_sorted)
+
+  return(map)
 }
