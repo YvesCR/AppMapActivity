@@ -2,7 +2,7 @@
 #' This is a function which allows to create a map of the french activities by department.
 #'
 #' @param activity_to_display label of the activity
-#' @importFrom tidyverse, ggplot2
+#' @importFrom tidyverse, ggplot2, grid
 #'
 display_activity <- function(activity_to_display){
   # activity_to_display <- "Défense"
@@ -54,9 +54,9 @@ display_activity <- function(activity_to_display){
                    , panel.background = element_blank()
                    , panel.grid.major = element_blank()
                    , panel.grid.minor = element_blank()
-                   , axis.ticks.length = grid::unit(0, "cm")
-                   , panel.spacing = grid::unit(0, "lines")
-                   , plot.margin = grid::unit(c(0, 0, 0, 0), "lines")
+                   , axis.ticks.length = unit(0, "cm")
+                   , panel.spacing = unit(0, "lines")
+                   , plot.margin = unit(c(0, 0, 0, 0), "lines")
                    , plot.title = element_text(hjust = 0.5)
                    , complete = TRUE) +
     coord_map()
