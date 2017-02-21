@@ -9,7 +9,8 @@ Depends:
     R (>= 3.1.0),
     ggplot2 (>= 2.2.0),
     tidyverse,
-    colorRamps
+    colorRamps,
+    grid
 License: Apache2
 Encoding: UTF-8
 LazyData: true

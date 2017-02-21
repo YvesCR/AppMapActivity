@@ -2,7 +2,7 @@
 #' This is a function which allows to create a map of the french activities by department.
 #'
 #' @param activity_to_display label of the activity
-#' @importFrom tidyverse, ggplot2, grid
+#' @importFrom tidyverse
 #'
 display_activity <- function(activity_to_display){
   # activity_to_display <- "Défense"
@@ -48,21 +48,21 @@ display_activity <- function(activity_to_display){
   rm(dpt_select_activity)
   rm(dpt_select_activity_2a)
 
-  ggplot() +
-    geom_polygon(data = dpt_p_det_act_sorted
-                          , aes(x = long, y = lat, group = group, fill = count)
+  ggplot2::ggplot() +
+    ggplot2::geom_polygon(data = dpt_p_det_act_sorted
+                          , ggplot2::aes(x = long, y = lat, group = group, fill = count)
                           , size=.2, color = 'grey40') +
-    scale_fill_gradientn(colours = colorRamps::matlab.like(10)) +
-    ggtitle(paste0(activity_to_display)) +
-    theme(axis.text = element_blank()
-                   , axis.title = element_blank()
-                   , panel.background = element_blank()
-                   , panel.grid.major = element_blank()
-                   , panel.grid.minor = element_blank()
-                   , axis.ticks.length = unit(0, "cm")
-                   , panel.spacing = unit(0, "lines")
-                   , plot.margin = unit(c(0, 0, 0, 0), "lines")
-                   , plot.title = element_text(hjust = 0.5)
+    ggplot2::scale_fill_gradientn(colours = colorRamps::matlab.like(10)) +
+    ggplot2::ggtitle(paste0(activity_to_display)) +
+    ggplot2::theme(axis.text = ggplot2::element_blank()
+                   , axis.title = ggplot2::element_blank()
+                   , panel.background = ggplot2::element_blank()
+                   , panel.grid.major = ggplot2::element_blank()
+                   , panel.grid.minor = ggplot2::element_blank()
+                   , axis.ticks.length = grid::unit(0, "cm")
+                   , panel.spacing = grid::unit(0, "lines")
+                   , plot.margin = grid::unit(c(0, 0, 0, 0), "lines")
+                   , plot.title = ggplot2::element_text(hjust = 0.5)
                    , complete = TRUE) +
-    coord_map()
+    ggplot2::coord_map()
 }
