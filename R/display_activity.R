@@ -5,7 +5,7 @@
 #' @importFrom tidyverse
 #'
 display_activity <- function(activity_to_display){
-  # activity_to_display <- "Défense"
+  # activity_to_display <- "Activités d'enquête"
 
   # for that activity, the df of the count:
   dpt_select_activity <- AppMapActivity::dpt_count_act %>%
