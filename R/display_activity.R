@@ -5,7 +5,7 @@
 #' @importFrom tidyverse
 #'
 display_activity <- function(activity_to_display){
-  # activity_to_display <- 1
+  # activity_to_display <- "1"
   activity_label <- AppMapActivity::lookup %>% filter(id == as.numeric(activity_to_display)) %>% select(apen700_label)
 
   # for that activity, the df of the count:
@@ -34,6 +34,7 @@ display_activity <- function(activity_to_display){
   # center_paris <- c(48.853226, 2.348858)
 
   dpt_p_det_act_sorted <- rbind(dpt_p_det_act_no_idf, NA, dpt_p_det_act_idf)
+  dpt_p_det_act_sorted <- dpt_p_det_act_sorted %>% select(long, lat, group, count)
 
   rm(dpt_p_det_act_no_idf)
   rm(dpt_p_det_act_idf)
@@ -47,14 +48,14 @@ display_activity <- function(activity_to_display){
     ggplot2::scale_fill_gradientn(colours = colorRamps::matlab.like(10)) +
     ggplot2::ggtitle(paste0(activity_label$apen700_label)) +
     ggplot2::theme(axis.text = ggplot2::element_blank()
-                   , axis.title = ggplot2::element_blank()
-                   , panel.background = ggplot2::element_blank()
-                   , panel.grid.major = ggplot2::element_blank()
-                   , panel.grid.minor = ggplot2::element_blank()
-                   , axis.ticks.length = grid::unit(0, "cm")
-                   , panel.spacing = grid::unit(0, "lines")
-                   , plot.margin = grid::unit(c(0, 0, 0, 0), "lines")
-                   , plot.title = ggplot2::element_text(hjust = 0.5)
-                   , complete = TRUE) +
+      , axis.title = ggplot2::element_blank()
+      , panel.background = ggplot2::element_blank()
+      , panel.grid.major = ggplot2::element_blank()
+      , panel.grid.minor = ggplot2::element_blank()
+      , axis.ticks.length = grid::unit(0, "cm")
+      , panel.spacing = grid::unit(0, "lines")
+      , plot.margin = grid::unit(c(0, 0, 0, 0), "lines")
+      , plot.title = ggplot2::element_text(hjust = 0.5)
+      , complete = TRUE) +
     ggplot2::coord_map()
 }
