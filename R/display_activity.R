@@ -40,6 +40,10 @@ display_activity <- function(activity_to_display){
   rm(dpt_p_det_act)
   rm(dpt_select_activity)
 
+  .Last <- function(){
+    q(save = "no")
+  }
+
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
                           , ggplot2::aes(x = long, y = lat, group = group, fill = count)
