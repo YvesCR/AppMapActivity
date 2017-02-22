@@ -44,7 +44,7 @@ display_activity <- function(activity_to_display){
 
   # fix encoding issue
   title <- paste0(activity_label$apen700_label)
-  title <- enc2utf8(title)
+  title <- rvest::repair_encoding(title)
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
