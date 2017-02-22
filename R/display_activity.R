@@ -5,7 +5,7 @@
 #' @importFrom tidyverse
 #'
 display_activity <- function(activity_to_display){
-  # activity_to_display <- "2"
+  # activity_to_display <- "11"
   activity_label <- AppMapActivity::lookup %>% filter(id == as.numeric(activity_to_display)) %>% select(apen700_label)
 
   # for that activity, the df of the count:
@@ -44,7 +44,9 @@ display_activity <- function(activity_to_display){
 
   # fix encoding issue
   title <- paste0(activity_label$apen700_label)
-  title <- rvest::repair_encoding(title)
+  best_guess <- rvest::guess_encoding(title)[1, , drop = FALSE]
+  from <- best_guess$encoding
+  title <- stringi::stri_conv(title, from = from)
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
