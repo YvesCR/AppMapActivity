@@ -35,6 +35,11 @@ display_activity <- function(activity_to_display){
 
   dpt_p_det_act_sorted <- rbind(dpt_p_det_act_no_idf, NA, dpt_p_det_act_idf)
 
+  rm(dpt_p_det_act_no_idf)
+  rm(dpt_p_det_act_idf)
+  rm(dpt_p_det_act)
+  rm(dpt_select_activity)
+
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
                           , ggplot2::aes(x = long, y = lat, group = group, fill = count)
@@ -52,5 +57,4 @@ display_activity <- function(activity_to_display){
                    , plot.title = ggplot2::element_text(hjust = 0.5)
                    , complete = TRUE) +
     ggplot2::coord_map()
-
 }
