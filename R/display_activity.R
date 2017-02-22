@@ -5,7 +5,7 @@
 #' @importFrom tidyverse
 #'
 display_activity <- function(activity_to_display){
-  # activity_to_display <- "1"
+  # activity_to_display <- "2"
   activity_label <- AppMapActivity::lookup %>% filter(id == as.numeric(activity_to_display)) %>% select(apen700_label)
 
   # for that activity, the df of the count:
@@ -44,12 +44,12 @@ display_activity <- function(activity_to_display){
 
   # fix encoding issue
   title <- paste0(activity_label$apen700_label)
-  Encoding(title) <- "latin1"
+  Encoding(title) <- "UTF-8"
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
-                          , ggplot2::aes(x = long, y = lat, group = group, fill = count)
-                          , size=.2, color = 'grey40') +
+      , ggplot2::aes(x = long, y = lat, group = group, fill = count)
+      , size=.2, color = 'grey40') +
     ggplot2::scale_fill_gradientn(colours = colorRamps::matlab.like(10)) +
     ggplot2::ggtitle(title) +
     ggplot2::theme(axis.text = ggplot2::element_blank()
