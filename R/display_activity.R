@@ -36,17 +36,22 @@ display_activity <- function(activity_to_display){
   dpt_p_det_act_sorted <- rbind(dpt_p_det_act_no_idf, NA, dpt_p_det_act_idf)
   dpt_p_det_act_sorted <- dpt_p_det_act_sorted %>% select(long, lat, group, count)
 
+  # bit of cleaning
   rm(dpt_p_det_act_no_idf)
   rm(dpt_p_det_act_idf)
   rm(dpt_p_det_act)
   rm(dpt_select_activity)
+
+  # fix encoding issue
+  title <- paste0(activity_label$apen700_label)
+  Encoding(title) <- "latin1"
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
                           , ggplot2::aes(x = long, y = lat, group = group, fill = count)
                           , size=.2, color = 'grey40') +
     ggplot2::scale_fill_gradientn(colours = colorRamps::matlab.like(10)) +
-    ggplot2::ggtitle(paste0(activity_label$apen700_label)) +
+    ggplot2::ggtitle(title) +
     ggplot2::theme(axis.text = ggplot2::element_blank()
       , axis.title = ggplot2::element_blank()
       , panel.background = ggplot2::element_blank()
