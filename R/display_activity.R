@@ -6,7 +6,6 @@
 #'
 display_activity <- function(activity_to_display){
   # activity_to_display <- "2"
-  Sys.setlocale("LC_ALL", 'en_US.UTF-8')
   activity_label <- AppMapActivity::lookup %>% filter(id == as.numeric(activity_to_display)) %>% select(apen700_label)
 
   # for that activity, the df of the count:
@@ -45,7 +44,7 @@ display_activity <- function(activity_to_display){
 
   # fix encoding issue
   title <- paste0(activity_label$apen700_label)
-  Encoding(title) <- "UTF-8"
+  title <- enc2utf8(title)
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
