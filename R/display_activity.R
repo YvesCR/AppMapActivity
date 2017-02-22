@@ -6,6 +6,7 @@
 #'
 display_activity <- function(activity_to_display){
   # activity_to_display <- "2"
+  Sys.setlocale("LC_ALL", 'en_US.UTF-8')
   activity_label <- AppMapActivity::lookup %>% filter(id == as.numeric(activity_to_display)) %>% select(apen700_label)
 
   # for that activity, the df of the count:
