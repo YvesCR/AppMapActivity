@@ -6,7 +6,7 @@
 #'
 display_activity <- function(activity_to_display){
   # activity_to_display <- 1
-  activity_label <- AppMapActivity::lookup %>% filter(id == activity_to_display) %>% select(apen700_label)
+  activity_label <- AppMapActivity::lookup %>% filter(id == as.numeric(activity_to_display)) %>% select(apen700_label)
 
   # for that activity, the df of the count:
   dpt_select_activity <- AppMapActivity::dpt_count_act %>%
@@ -39,10 +39,6 @@ display_activity <- function(activity_to_display){
   rm(dpt_p_det_act_idf)
   rm(dpt_p_det_act)
   rm(dpt_select_activity)
-
-  .Last <- function(){
-    q(save = "no")
-  }
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
