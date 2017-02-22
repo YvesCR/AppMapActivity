@@ -44,9 +44,7 @@ display_activity <- function(activity_to_display){
 
   # fix encoding issue
   title <- paste0(activity_label$apen700_label)
-  best_guess <- rvest::guess_encoding(title)[1, , drop = FALSE]
-  from <- best_guess$encoding
-  title <- stringi::stri_conv(title, from = from)
+  title <- stringi::stri_conv(title, from = "ISO-8859-1")
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(data = dpt_p_det_act_sorted
