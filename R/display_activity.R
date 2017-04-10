@@ -6,35 +6,35 @@
 #'
 display_activity <- function(activity_to_display){
   # activity_to_display <- "11"
-  activity_label <- AppMapActivity::lookup %>% filter(id == as.numeric(activity_to_display)) %>% select(apen700_label)
+  activity_label <- AppMapActivity::lookup %>% dplyr::filter(id == as.numeric(activity_to_display)) %>% dplyr::select(apen700_label)
 
   # for that activity, the df of the count:
   dpt_select_activity <- AppMapActivity::dpt_count_act %>%
-    filter(apen700_label == activity_label$apen700_label) %>%
-    mutate(code_dept = dpt)
+    dplyr::filter(apen700_label == activity_label$apen700_label) %>%
+    dplyr::mutate(code_dept = dpt)
 
   dpt_p_det_act <- AppMapActivity::dpt_p_det %>%
-    left_join(dpt_select_activity, by = "code_dept")
+    dplyr::left_join(dpt_select_activity, by = "code_dept")
 
   ## special feature for the Parisian region and Corsica:
   idf_lim_dpt <- c("75", "92", "93", "94")
 
   dpt_p_det_act_no_idf <- dpt_p_det_act %>%
-    filter(!code_dept %in% idf_lim_dpt)
+    dplyr::filter(!code_dept %in% idf_lim_dpt)
 
   # multiplicative factor to increase the Parisian region size:
   factor_growth <- 4
 
   dpt_p_det_act_idf <- dpt_p_det_act %>%
-    filter(code_dept %in% idf_lim_dpt) %>%
-    mutate(long = factor_growth * (long - 6) + (2.348858 - 6) * (1 - factor_growth)
+    dplyr::filter(code_dept %in% idf_lim_dpt) %>%
+    dplyr::mutate(long = factor_growth * (long - 6) + (2.348858 - 6) * (1 - factor_growth)
       , lat = factor_growth * (lat - 6) + (48.853226 - 6) * (1 - factor_growth))
 
   # center of Paris:(manual)
   # center_paris <- c(48.853226, 2.348858)
 
   dpt_p_det_act_sorted <- rbind(dpt_p_det_act_no_idf, NA, dpt_p_det_act_idf)
-  dpt_p_det_act_sorted <- dpt_p_det_act_sorted %>% select(long, lat, group, count)
+  dpt_p_det_act_sorted <- dpt_p_det_act_sorted %>% dplyr::select(long, lat, group, count)
 
   # bit of cleaning
   rm(dpt_p_det_act_no_idf)
