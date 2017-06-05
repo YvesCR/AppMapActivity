@@ -63,4 +63,5 @@ display_activity <- function(activity_to_display){
       , plot.title = ggplot2::element_text(hjust = 0.5)
       , complete = TRUE) +
     ggplot2::coord_map()
+
 }
